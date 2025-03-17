@@ -1,0 +1,167 @@
+/* ヘッダーコンテナ全体のスタイル */
+.header-container {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* ロゴ部分のスタイル */
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+/* メニューバーのカスタマイズ */
+:host ::ng-deep .p-menubar {
+  padding: 0.5rem 1rem;
+  border-radius: 0;
+  border: none;
+}
+
+:host ::ng-deep .p-menubar .p-menuitem-link {
+  padding: 0.75rem 1rem;
+}
+
+:host ::ng-deep .p-menubar .p-menuitem-icon {
+  margin-right: 0.5rem;
+}
+
+/* 検索部分のスタイル */
+.search-container {
+  margin-right: 1rem;
+}
+
+.search-input {
+  width: 250px;
+  transition: width 0.3s ease;
+}
+
+.search-input:focus {
+  width: 300px;
+}
+
+/* ユーザーボタンのスタイル */
+.user-container {
+  display: flex;
+  align-items: center;
+}
+
+.user-btn {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+}
+
+.user-name {
+  margin-left: 0.5rem;
+  font-weight: 500;
+}
+
+/* 通知メニューのカスタマイズ */
+:host ::ng-deep .notification-menu {
+  width: 350px;
+}
+
+:host ::ng-deep .notification-item {
+  white-space: normal;
+  padding: 0.75rem 1rem;
+  line-height: 1.5;
+}
+
+:host ::ng-deep .notification-warning {
+  background-color: var(--yellow-50);
+}
+
+/* バッジのカスタマイズ */
+:host ::ng-deep .p-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(30%, -30%);
+}
+
+/* ダークテーマ対応 */
+:host-context(body.dark-theme) ::ng-deep .p-menubar {
+  background: var(--surface-card);
+  border: 1px solid var(--surface-border);
+}
+
+:host-context(body.dark-theme) .logo-text {
+  color: var(--text-color);
+}
+
+:host-context(body.dark-theme) ::ng-deep .p-inputtext {
+  background: var(--surface-card);
+  color: var(--text-color);
+}
+
+/* レスポンシブ対応 */
+@media screen and (max-width: 768px) {
+  .search-input {
+    width: 150px;
+  }
+
+  .search-input:focus {
+    width: 200px;
+  }
+
+  .hide-on-mobile {
+    display: none;
+  }
+
+  :host ::ng-deep .p-menubar .p-menubar-button {
+    margin-left: 0.5rem;
+  }
+}
+
+/* テーマカラーと組み合わせたスタイルのカスタマイズ */
+:host ::ng-deep .p-menubar .p-menuitem-link:hover {
+  background: var(--primary-50);
+}
+
+:host ::ng-deep .p-menubar .p-menuitem-link:focus {
+  box-shadow: 0 0 0 0.2rem var(--primary-200);
+}
+
+/* スタイリッシュなホバーエフェクト */
+.logo-image {
+  transition: transform 0.3s ease;
+}
+
+.logo-link:hover .logo-image {
+  transform: scale(1.05);
+}
+
+:host ::ng-deep .p-button.p-button-text:hover {
+  background: var(--primary-50);
+  color: var(--primary-color);
+}
+
+/* アニメーション */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+:host ::ng-deep .p-badge {
+  animation: pulse 2s infinite;
+}

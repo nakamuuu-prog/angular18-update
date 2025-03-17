@@ -1,0 +1,103 @@
+<div class="header-container">
+  <p-menubar [model]="items" styleClass="shadow-2">
+    <!-- ロゴ部分（スタート） -->
+    <ng-template pTemplate="start">
+      <div class="logo-container">
+        <a href="/" class="logo-link">
+          <span class="logo-text"
+            >Angular<span class="text-primary font-bold">Labs</span></span
+          >
+        </a>
+      </div>
+    </ng-template>
+
+    <!-- 右側アクション部分（エンド） -->
+    <ng-template pTemplate="end">
+      <!-- 検索ボックス -->
+      <div class="search-container mr-3">
+        <span class="p-input-icon-left p-input-icon-right">
+          <i class="pi pi-search"></i>
+          <input
+            type="text"
+            pInputText
+            [(ngModel)]="searchValue"
+            (keyup.enter)="search()"
+            placeholder="検索..."
+            class="search-input"
+          />
+          <i
+            class="pi pi-times cursor-pointer"
+            *ngIf="searchValue"
+            (click)="searchValue = ''"
+          ></i>
+        </span>
+      </div>
+
+      <!-- ダークモード切り替え -->
+      <button
+        pButton
+        pRipple
+        type="button"
+        [icon]="isDarkMode ? 'pi pi-sun' : 'pi pi-moon'"
+        (click)="toggleDarkMode()"
+        class="p-button-rounded p-button-text p-button-lg theme-toggle-btn mr-2"
+        [ngClass]="{
+          'p-button-secondary': !isDarkMode,
+          'p-button-info': isDarkMode
+        }"
+        pTooltip="テーマ切り替え"
+        tooltipPosition="bottom"
+      ></button>
+
+      <!-- ユーザーメニュー -->
+      <div class="user-container">
+        <button
+          #userBtn
+          pButton
+          pRipple
+          type="button"
+          class="p-button-rounded p-button-text user-btn"
+          pTooltip="ユーザーメニュー"
+          tooltipPosition="bottom"
+        >
+          <span class="user-name hide-on-mobile">鈴木 太郎</span>
+          <i class="pi pi-angle-down ml-1"></i>
+        </button>
+        <p-tieredMenu
+          #userMenu
+          [model]="userMenuItems"
+          [popup]="true"
+          appendTo="body"
+          styleClass="user-menu"
+        ></p-tieredMenu>
+      </div>
+    </ng-template>
+  </p-menubar>
+</div>
+
+<!-- TieredMenuコンポーネントのトリガー設定 -->
+<script>
+  // 通知メニューのトリガー設定
+  document.addEventListener("DOMContentLoaded", () => {
+    const notificationBtn = document.querySelector("#notificationBtn");
+    const notificationMenu = document.querySelector(
+      "p-tieredMenu#notificationMenu"
+    );
+
+    if (notificationBtn && notificationMenu) {
+      notificationBtn.addEventListener("click", (event) => {
+        notificationMenu.toggle(event);
+      });
+    }
+
+    // ユーザーメニューのトリガー設定
+    const userBtn = document.querySelector("#userBtn");
+    const userMenu = document.querySelector("p-tieredMenu#userMenu");
+
+    if (userBtn && userMenu) {
+      userBtn.addEventListener("click", (event) => {
+        userMenu.toggle(event);
+      });
+    }
+  });
+</script>

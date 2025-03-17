@@ -1,0 +1,447 @@
+<div class="form-container">
+  <p-toast></p-toast>
+
+  <p-card
+    header="PrimeNG v17 サンプル入力フォーム"
+    subheader="様々なコンポーネントを使用した入力フォーム"
+    styleClass="shadow-4"
+  >
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <!-- 個人情報セクション -->
+      <div formGroupName="personalInfo">
+        <div class="grid">
+          <div class="col-12 md:col-6">
+            <div class="field">
+              <label for="firstName" class="font-bold">名前 *</label>
+              <input
+                id="firstName"
+                type="text"
+                pInputText
+                class="w-full"
+                formControlName="firstName"
+                placeholder="例: 太郎"
+              />
+              <small
+                *ngIf="
+                  form.get('personalInfo.firstName')?.invalid &&
+                  form.get('personalInfo.firstName')?.touched
+                "
+                class="p-error"
+              >
+                名前は必須項目です（2文字以上）
+              </small>
+            </div>
+          </div>
+
+          <div class="col-12 md:col-6">
+            <div class="field">
+              <label for="lastName" class="font-bold">姓 *</label>
+              <input
+                id="lastName"
+                type="text"
+                pInputText
+                class="w-full"
+                formControlName="lastName"
+                placeholder="例: 山田"
+              />
+              <small
+                *ngIf="
+                  form.get('personalInfo.lastName')?.invalid &&
+                  form.get('personalInfo.lastName')?.touched
+                "
+                class="p-error"
+              >
+                姓は必須項目です（2文字以上）
+              </small>
+            </div>
+          </div>
+
+          <div class="col-12 md:col-6">
+            <div class="field">
+              <label for="email" class="font-bold">メールアドレス *</label>
+              <input
+                id="email"
+                type="email"
+                pInputText
+                class="w-full"
+                formControlName="email"
+                placeholder="例: example@email.com"
+              />
+              <small
+                *ngIf="
+                  form.get('personalInfo.email')?.invalid &&
+                  form.get('personalInfo.email')?.touched
+                "
+                class="p-error"
+              >
+                有効なメールアドレスを入力してください
+              </small>
+            </div>
+          </div>
+
+          <div class="col-12 md:col-6">
+            <div class="field">
+              <label for="password" class="font-bold">パスワード *</label>
+              <p-password
+                id="password"
+                formControlName="password"
+                [toggleMask]="true"
+                styleClass="w-full"
+                [feedback]="true"
+                promptLabel="パスワードを入力"
+                weakLabel="弱い"
+                mediumLabel="中程度"
+                strongLabel="強い"
+              ></p-password>
+              <small
+                *ngIf="
+                  form.get('personalInfo.password')?.invalid &&
+                  form.get('personalInfo.password')?.touched
+                "
+                class="p-error"
+              >
+                パスワードは8文字以上必要です
+              </small>
+            </div>
+          </div>
+
+          <div class="col-12 md:col-6">
+            <div class="field">
+              <label for="phoneNumber" class="font-bold">電話番号 *</label>
+              <p-inputMask
+                id="phoneNumber"
+                mask="999-9999-9999"
+                formControlName="phoneNumber"
+                placeholder="例: 090-1234-5678"
+                styleClass="w-full"
+              ></p-inputMask>
+              <small
+                *ngIf="
+                  form.get('personalInfo.phoneNumber')?.invalid &&
+                  form.get('personalInfo.phoneNumber')?.touched
+                "
+                class="p-error"
+              >
+                電話番号は必須項目です
+              </small>
+            </div>
+          </div>
+
+          <div class="col-12 md:col-6">
+            <div class="field">
+              <label for="birthDate" class="font-bold">生年月日 *</label>
+              <p-calendar
+                id="birthDate"
+                formControlName="birthDate"
+                [showIcon]="true"
+                dateFormat="yy/mm/dd"
+                placeholder="例: 1990/01/01"
+                styleClass="w-full"
+              ></p-calendar>
+              <small
+                *ngIf="
+                  form.get('personalInfo.birthDate')?.invalid &&
+                  form.get('personalInfo.birthDate')?.touched
+                "
+                class="p-error"
+              >
+                生年月日は必須項目です
+              </small>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="field">
+              <label class="font-bold">性別 *</label>
+              <div class="grid">
+                <div
+                  *ngFor="let option of genderOptions"
+                  class="col-6 md:col-3"
+                >
+                  <p-radioButton
+                    [inputId]="option.value"
+                    [value]="option.value"
+                    formControlName="gender"
+                    [label]="option.label"
+                  ></p-radioButton>
+                </div>
+              </div>
+              <small
+                *ngIf="
+                  form.get('personalInfo.gender')?.invalid &&
+                  form.get('personalInfo.gender')?.touched
+                "
+                class="p-error"
+              >
+                性別を選択してください
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 住所情報セクション -->
+      <div formGroupName="addressInfo">
+        <div class="grid">
+          <div class="col-12 md:col-6">
+            <div class="field">
+              <label for="prefecture" class="font-bold">都道府県 *</label>
+              <p-dropdown
+                id="prefecture"
+                [options]="prefectureOptions"
+                optionLabel="label"
+                optionValue="value"
+                formControlName="prefecture"
+                placeholder="都道府県を選択"
+                styleClass="w-full"
+              ></p-dropdown>
+              <small
+                *ngIf="
+                  form.get('addressInfo.prefecture')?.invalid &&
+                  form.get('addressInfo.prefecture')?.touched
+                "
+                class="p-error"
+              >
+                都道府県を選択してください
+              </small>
+            </div>
+          </div>
+
+          <div class="col-12 md:col-6">
+            <div class="field">
+              <label for="city" class="font-bold">市区町村 *</label>
+              <input
+                id="city"
+                type="text"
+                pInputText
+                class="w-full"
+                formControlName="city"
+                placeholder="例: 新宿区"
+              />
+              <small
+                *ngIf="
+                  form.get('addressInfo.city')?.invalid &&
+                  form.get('addressInfo.city')?.touched
+                "
+                class="p-error"
+              >
+                市区町村は必須項目です
+              </small>
+            </div>
+          </div>
+
+          <div class="col-12 md:col-6">
+            <div class="field">
+              <label for="postalCode" class="font-bold">郵便番号 *</label>
+              <p-inputMask
+                id="postalCode"
+                mask="999-9999"
+                formControlName="postalCode"
+                placeholder="例: 123-4567"
+                styleClass="w-full"
+              ></p-inputMask>
+              <small
+                *ngIf="
+                  form.get('addressInfo.postalCode')?.invalid &&
+                  form.get('addressInfo.postalCode')?.touched
+                "
+                class="p-error"
+              >
+                郵便番号は必須項目です
+              </small>
+            </div>
+          </div>
+
+          <div class="col-12 md:col-6">
+            <div class="field">
+              <label for="address1" class="font-bold">番地・建物名 *</label>
+              <input
+                id="address1"
+                type="text"
+                pInputText
+                class="w-full"
+                formControlName="address1"
+                placeholder="例: 1-2-3 サンプルビル101"
+              />
+              <small
+                *ngIf="
+                  form.get('addressInfo.address1')?.invalid &&
+                  form.get('addressInfo.address1')?.touched
+                "
+                class="p-error"
+              >
+                番地・建物名は必須項目です
+              </small>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="field">
+              <label for="address2" class="font-bold"
+                >建物名・部屋番号 (任意)</label
+              >
+              <input
+                id="address2"
+                type="text"
+                pInputText
+                class="w-full"
+                formControlName="address2"
+                placeholder="例: サンプルマンション 101号室"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 設定・好みセクション -->
+      <div formGroupName="preferences">
+        <div class="grid">
+          <div class="col-12">
+            <div class="field">
+              <label for="interests" class="font-bold">興味のある分野</label>
+              <p-multiSelect
+                id="interests"
+                [options]="interestOptions"
+                optionLabel="label"
+                optionValue="value"
+                formControlName="interests"
+                defaultLabel="興味のある分野を選択"
+                display="chip"
+                styleClass="w-full"
+              ></p-multiSelect>
+            </div>
+          </div>
+
+          <div class="col-12 md:col-6">
+            <div class="field">
+              <label for="skills" class="font-bold">スキル・特技</label>
+              <p-chips
+                id="skills"
+                formControlName="skills"
+                placeholder="スキルを入力して Enter"
+                styleClass="w-full"
+              ></p-chips>
+            </div>
+          </div>
+
+          <div class="col-12 md:col-6">
+            <div class="field">
+              <label for="bio" class="font-bold">自己紹介</label>
+              <textarea
+                id="bio"
+                pInputTextarea
+                formControlName="bio"
+                [rows]="3"
+                [cols]="30"
+                placeholder="自己紹介（200文字以内）"
+                class="w-full"
+              ></textarea>
+              <small
+                *ngIf="
+                  form.get('preferences.bio')?.invalid &&
+                  form.get('preferences.bio')?.touched
+                "
+                class="p-error"
+              >
+                自己紹介は200文字以内で入力してください
+              </small>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="field">
+              <label for="satisfactionRating" class="font-bold"
+                >満足度（0〜5）</label
+              >
+              <p-rating
+                id="satisfactionRating"
+                formControlName="satisfactionRating"
+                [cancel]="false"
+                styleClass="w-full"
+              ></p-rating>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="field">
+              <label for="budgetRange" class="font-bold"
+                >予算範囲:
+                {{ form.get("preferences.budgetRange")?.value || 0 }}
+                万円</label
+              >
+              <p-slider
+                id="budgetRange"
+                formControlName="budgetRange"
+                [min]="0"
+                [max]="100"
+                styleClass="w-full"
+              ></p-slider>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div class="field-checkbox">
+              <p-checkbox
+                inputId="notifications"
+                [binary]="true"
+                formControlName="notifications"
+              ></p-checkbox>
+              <label for="notifications" class="ml-2">通知を受け取る</label>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div class="field-checkbox">
+              <p-inputSwitch
+                inputId="marketingEmails"
+                formControlName="marketingEmails"
+              ></p-inputSwitch>
+              <label for="marketingEmails" class="ml-2"
+                >マーケティングメールを受け取る</label
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p-divider></p-divider>
+
+      <div class="field-checkbox my-4">
+        <p-checkbox
+          inputId="agreeToTerms"
+          [binary]="true"
+          formControlName="agreeToTerms"
+        ></p-checkbox>
+        <label for="agreeToTerms" class="ml-2"
+          >利用規約とプライバシーポリシーに同意します *</label
+        >
+        <div>
+          <small
+            *ngIf="
+              form.get('agreeToTerms')?.invalid &&
+              form.get('agreeToTerms')?.touched
+            "
+            class="p-error"
+          >
+            利用規約に同意する必要があります
+          </small>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap justify-content-between">
+        <p-button
+          label="リセット"
+          icon="pi pi-refresh"
+          (onClick)="clearForm()"
+          styleClass="p-button-secondary"
+        ></p-button>
+        <p-button
+          type="submit"
+          label="送信"
+          icon="pi pi-check"
+          [disabled]="form.invalid"
+        ></p-button>
+      </div>
+    </form>
+  </p-card>
+</div>
